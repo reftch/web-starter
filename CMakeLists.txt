@@ -10,7 +10,6 @@ endif()
 
 file(GLOB SOURCES "src/*.cpp")
 
-# Avoid target name
 add_executable(web-starter-app ${SOURCES})
 
 include(FetchContent)
