@@ -5,6 +5,10 @@ project(web-starter)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if(NOT APPLE)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
+endif()
+
 # Find all source files in src directory
 file(GLOB SOURCES "src/*.cpp")
 
