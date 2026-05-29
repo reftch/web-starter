@@ -49,4 +49,4 @@ run = "cd ./web && bun run build"
 [tasks.clean]
 description = "Cleanup"
 quiet = true
-run = "rm -rf ./build ./web/node_modules"
+run = "rm -rf ./build ./web/node_modules ./web/dist"
