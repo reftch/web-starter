@@ -19,7 +19,7 @@ run = "cd ./build && make && ./web-starter-app"
 [tasks.app-install]
 description = "Build and run application"
 quiet = true
-run = "mkdir -p build && cd ./build && cmake .."
+run = "mkdir -p build && cd ./build && cmake .. && cp -r ../assets ."
 
 # -----------------------------------------------------------------------------
 # Web
