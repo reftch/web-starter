@@ -9,11 +9,19 @@ export function App() {
 
   const onSearch = (value: string) => {
     console.log("Searching for:", value)
-    const [lat, lng] = value.split(',').map(Number);
+    // const [lat, lng] = value.split(',').map(Number);
+    const [lat, lng] = value.split(',').map(str => {
+      const num = Number(str.trim());
+      if (isNaN(num) || !isFinite(num)) {
+        throw new Error(`Invalid number: ${str}`);
+      }
+      return num;
+    });
 
     fetch(`/api/v1/temperature?latidude=${lat}&longtitude=${lng}`)
       .then((response) => response.json())
       .then((json) => {
+        console.log(json);
         setTemperature(`${json.current.temperature_2m}°C`);
         setElevation(`${json.elevation}m`);
       })

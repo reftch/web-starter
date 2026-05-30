@@ -1,8 +1,9 @@
-import { cn } from "../lib/utils"
+import { useState } from "preact/compat"
 import { Button } from "./ui/button"
 import { Field } from "./ui/field"
+import { cn } from "../lib/utils"
 import { Input } from "./ui/input"
-import { useState } from "preact/compat"
+import { InputGroup, InputGroupInput } from "./ui/input-group"
 
 function HeaderTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -17,30 +18,26 @@ function HeaderTitle({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+
 type HeaderSearchProps = React.ComponentProps<"div"> & {
   onSearch: (value: string) => void
 }
 
 function HeaderSearch({ className, onSearch, ...props }: HeaderSearchProps) {
-  const [value] = useState("")
+  const [value, setValue] = useState("")
 
   const handleChange = (e: Event) => {
     const input = e.currentTarget as HTMLInputElement;
     console.log(input.value);
+    setValue(input.value)
+    /*
     fetch(`/api/v1/cities?keyword=${input.value}`)
       .then((response) => response.json())
       .then((json) => {
         console.log(json)
-        // setTemperature(`${json.current.temperature_2m}°C`);
-        // setElevation(`${json.elevation}m`);
       })
+        */
   };
-
-  // const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   // const value = e.target.value;
-  //   // console.log("Searching for:", value)
-  //   // You can call your search function here
-  // }
 
   return (
     <div
@@ -52,7 +49,24 @@ function HeaderSearch({ className, onSearch, ...props }: HeaderSearchProps) {
       {...props}
     >
       <Field orientation="horizontal">
-        <Input
+        <InputGroup className="rounded">
+          <InputGroupInput
+            className="w-[20rem]"
+            type="search"
+            placeholder="Search..."
+            value={value}
+            onInput={handleChange}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                onSearch(value);
+              }
+            }}
+
+          />
+
+        </InputGroup>
+
+        {/* <Input
           className="w-[22rem]"
           type="search"
           placeholder="Search..."
@@ -64,7 +78,7 @@ function HeaderSearch({ className, onSearch, ...props }: HeaderSearchProps) {
               onSearch(value);
             }
           }}
-        />
+        /> */}
         <Button className="cursor-pointer" onClick={() => onSearch(value)}>Search</Button>
       </Field>
     </div>
