@@ -10,6 +10,8 @@ endif()
 
 file(GLOB SOURCES "src/*.cc")
 
+
+find_package(OpenSSL REQUIRED)
 add_executable(web-starter-app ${SOURCES})
 
 include(FetchContent)
@@ -25,7 +27,12 @@ set(BUILD_TEST OFF CACHE INTERNAL "")
 
 FetchContent_MakeAvailable(http-server)
 
-target_link_libraries(web-starter-app http-server)
+target_link_libraries(web-starter-app 
+PRIVATE
+    http-server
+    OpenSSL::SSL
+    OpenSSL::Crypto
+)
 
 # copy assests
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})

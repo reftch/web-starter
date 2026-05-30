@@ -6,7 +6,7 @@
   "tailwind": {
     "config": "",
     "css": "src/index.css",
-    "baseColor": "mist",
+    "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
   },
@@ -15,9 +15,9 @@
   "aliases": {
     "components": "src/components",
     "utils": "src/lib/utils",
-    "ui": "srv/components/ui",
+    "ui": "src/components/ui",
     "lib": "src/lib",
-    "hooks": "src/hooks"
+    "hooks": "sr/hooks"
   },
   "menuColor": "default",
   "menuAccent": "subtle",

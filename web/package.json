@@ -1,5 +1,5 @@
 {
-  "name": "vite-project",
+  "name": "web",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,7 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fontsource-variable/inter": "^5.2.8",
+    "@base-ui/react": "^1.5.0",
+    "@fontsource-variable/geist": "^5.2.9",
     "@tailwindcss/vite": "^4.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
