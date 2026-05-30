@@ -1,0 +1,393 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 52822,
+                "osm_key": "place",
+                "osm_value": "country",
+                "type": "country",
+                "name": "Sverige",
+                "country": "Sverige",
+                "countrycode": "SE",
+                "extent": [
+                    10.5935025,
+                    69.0599735,
+                    24.177685,
+                    55.1370957
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    14.5208584,
+                    59.6749712
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 51701,
+                "osm_key": "place",
+                "osm_value": "country",
+                "type": "country",
+                "name": "Schweiz/Suisse/Svizzera/Svizra",
+                "country": "Schweiz/Suisse/Svizzera/Svizra",
+                "countrycode": "CH",
+                "extent": [
+                    5.955902,
+                    47.8084544,
+                    10.4922941,
+                    45.8179585
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    8.2319736,
+                    46.7985624
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 54224,
+                "osm_key": "place",
+                "osm_value": "country",
+                "type": "country",
+                "name": "Suomi / Finland",
+                "country": "Suomi",
+                "countrycode": "FI",
+                "extent": [
+                    19.0832,
+                    70.092293,
+                    31.5867071,
+                    59.4541578
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    25.9209164,
+                    63.2467777
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 14296,
+                "osm_key": "place",
+                "osm_value": "country",
+                "type": "country",
+                "name": "Slovensko",
+                "country": "Slovensko",
+                "countrycode": "SK",
+                "extent": [
+                    16.8331891,
+                    49.6138162,
+                    22.5657103,
+                    47.7311798
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    19.4528646,
+                    48.7411522
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 87565,
+                "osm_key": "place",
+                "osm_value": "country",
+                "type": "country",
+                "name": "South Africa",
+                "country": "South Africa",
+                "countrycode": "ZA",
+                "extent": [
+                    16.3335213,
+                    -22.1250301,
+                    38.2898954,
+                    -47.1788335
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    24.991639,
+                    -28.8166236
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 218657,
+                "osm_key": "place",
+                "osm_value": "country",
+                "type": "country",
+                "name": "Slovenija",
+                "country": "Slovenija",
+                "countrycode": "SI",
+                "extent": [
+                    13.3754696,
+                    46.8766816,
+                    16.5967003,
+                    45.4214681
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    14.8153333,
+                    46.1199444
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 17140517,
+                "osm_key": "place",
+                "osm_value": "city",
+                "type": "city",
+                "name": "Singapore",
+                "country": "Singapore",
+                "countrycode": "SG",
+                "extent": [
+                    103.5655797,
+                    1.4787511,
+                    104.1290145,
+                    1.1303611
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    103.8519072,
+                    1.2899175
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 536780,
+                "osm_key": "place",
+                "osm_value": "country",
+                "type": "country",
+                "name": "Singapore",
+                "country": "Singapore",
+                "countrycode": "SG",
+                "extent": [
+                    103.5655797,
+                    1.5143183,
+                    104.5712337,
+                    1.1303611
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    103.8194992,
+                    1.357107
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "N",
+                "osm_id": 25929985,
+                "osm_key": "place",
+                "osm_value": "city",
+                "type": "city",
+                "name": "Stockholm",
+                "county": "Stockholms län",
+                "country": "Sverige",
+                "postcode": "111 29",
+                "countrycode": "SE"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    18.0710935,
+                    59.3251172
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 5750005,
+                "osm_key": "place",
+                "osm_value": "city",
+                "type": "city",
+                "name": "Sydney",
+                "state": "New South Wales",
+                "country": "Australia",
+                "countrycode": "AU",
+                "extent": [
+                    150.260825,
+                    -33.3641864,
+                    151.343898,
+                    -34.1732416
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    151.2082848,
+                    -33.8698439
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "N",
+                "osm_id": 167386167,
+                "osm_key": "amenity",
+                "osm_value": "library",
+                "type": "house",
+                "housenumber": "20-22",
+                "name": "Biblioteca Nacional de España",
+                "street": "Paseo de Recoletos",
+                "locality": "Recoletos",
+                "district": "Salamanca",
+                "city": "Madrid",
+                "state": "Comunidad de Madrid",
+                "country": "España",
+                "postcode": "28071",
+                "countrycode": "ES"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -3.6899043,
+                    40.4237276
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 1311341,
+                "osm_key": "place",
+                "osm_value": "country",
+                "type": "country",
+                "name": "España",
+                "country": "España",
+                "countrycode": "ES",
+                "extent": [
+                    -18.3936845,
+                    43.9933088,
+                    4.5918885,
+                    27.4335426
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -4.8379791,
+                    39.3260685
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 58446,
+                "osm_key": "place",
+                "osm_value": "state",
+                "type": "state",
+                "name": "Alba / Scotland",
+                "country": "United Kingdom",
+                "countrycode": "GB",
+                "extent": [
+                    -14.015517,
+                    61.061,
+                    -0.3209221,
+                    54.4339831
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -4.1140518,
+                    56.7861112
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 184840,
+                "osm_key": "place",
+                "osm_value": "country",
+                "type": "country",
+                "name": "سوريا",
+                "country": "سوريا",
+                "countrycode": "SY",
+                "extent": [
+                    35.4714427,
+                    37.3186819,
+                    42.3745894,
+                    32.3117576
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    39.0494106,
+                    34.6401861
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "osm_type": "R",
+                "osm_id": 2067731,
+                "osm_key": "place",
+                "osm_value": "country",
+                "type": "country",
+                "name": "ประเทศไทย",
+                "country": "ประเทศไทย",
+                "countrycode": "TH",
+                "extent": [
+                    97.3438072,
+                    20.4648135,
+                    105.636812,
+                    5.612851
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    100.83273,
+                    14.8971921
+                ]
+            }
+        }
+    ]
+}
