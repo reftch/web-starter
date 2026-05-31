@@ -1,9 +1,9 @@
 import { useEffect, useState } from "preact/compat";
 import { cn } from "../lib/utils";
-import { Button } from "./ui/button";
 import { Field } from "./ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import type { City } from "../model";
 
 function HeaderTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -19,21 +19,13 @@ function HeaderTitle({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 type HeaderSearchProps = React.ComponentProps<"div"> & {
-  onSearch: (value: string) => void
-}
-
-type City = {
-  id: number
-  name: string
-  state: string
-  country: string
-  latidude: number
-  longtitude: number;
+  onSearch: (city: City) => void
 }
 
 function HeaderSearch({ className, onSearch, ...props }: HeaderSearchProps) {
   const [value, setValue] = useState("")
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [city] = useState<City>()
   const [cities, setCities] = useState<Array<City>>([])
   const [filteredCities, setFilteredCities] = useState<City[]>([]);
 
@@ -62,34 +54,76 @@ function HeaderSearch({ className, onSearch, ...props }: HeaderSearchProps) {
     }
   }, [isSearchOpen]);
 
+  const containsNumbers = (str: string) => {
+    return /\d/.test(str); // Checks if string contains at least one digit
+  }
+
   const handleChange = (e: Event) => {
     const input = e.currentTarget as HTMLInputElement;
-    setValue(input.value)
-
-    fetch(`/api/v1/cities?keyword=${input.value}`)
-      .then((response) => response.json())
-      .then((json) => {
-        const array: Array<City> = []
-        if (json.features.length > 0) {
-          json.features.forEach((c: any) => array.push({
-            id: c.properties.osm_id,
-            name: c.properties.name,
-            state: c.properties.state,
-            country: c.properties.country,
-            latidude: c.geometry.coordinates[1],
-            longtitude: c.geometry.coordinates[0],
-          }));
-
-          setCities(array);
+    const value = input.value;
+    setValue(value)
+    // console.log(input.value)
+    if (containsNumbers(value)) {
+      const [lat, lng] = value.split(',').map(str => {
+        const num = Number(str.trim());
+        if (isNaN(num) || !isFinite(num)) {
+          throw new Error(`Invalid number: ${str}`);
         }
-      })
+        return num;
+      });
 
+      const city: City = {
+        id: 1,
+        name: value,
+        state: '',
+        country: '',
+        elevation: 0,
+        coordinate: {
+          latitude: lat,
+          longtitude: lng,
+        },
+        current: {
+          temperature_2m: 0,
+          interval: 0,
+          time: '',
+        },
+      }
+      onSearch(city);
+
+    } else if (value.length > 0) {
+      fetch(`/api/v1/cities?keyword=${input.value}`)
+        .then((response) => response.json())
+        .then((json) => {
+          const array: Array<City> = []
+          if (json.features.length > 0) {
+            json.features.forEach((c: any) => array.push({
+              id: c.properties.osm_id,
+              name: c.properties.name,
+              state: c.properties.state,
+              country: c.properties.country,
+              elevation: 0,
+              coordinate: {
+                latitude: c.geometry.coordinates[1],
+                longtitude: c.geometry.coordinates[0],
+              },
+              current: {
+                temperature_2m: 0,
+                interval: 0,
+                time: '',
+              },
+            }));
+
+            setCities(array);
+          }
+        })
+    }
   };
 
   const handleCitySelect = (city: City) => {
     setIsSearchOpen(false);
     setValue(city.name);
-    onSearch(`${city.latidude},${city.longtitude}`);
+    // onSearch(`${city.coordinate.latitude},${city.coordinate.longtitude}`);
+    onSearch(city);
   };
 
   return (
@@ -113,7 +147,7 @@ function HeaderSearch({ className, onSearch, ...props }: HeaderSearchProps) {
             tabIndex={1}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                onSearch(value);
+                onSearch(city!);
               }
             }}
           />
@@ -150,7 +184,7 @@ function HeaderSearch({ className, onSearch, ...props }: HeaderSearchProps) {
 
         </InputGroup>
 
-        <Button className="cursor-pointer" onClick={() => onSearch(value)}>Search</Button>
+        {/* <Button className="cursor-pointer" onClick={() => onSearch(city!)}>Search</Button> */}
       </Field>
     </div>
   )

@@ -1,30 +1,34 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { Content } from "./components/content";
 import { Header, HeaderSearch, HeaderTitle } from "./components/header";
-import { Card, CardContent } from "./components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./components/ui/card";
+import type { City } from "./model";
+import { Button } from "./components/ui/button";
 
 export function App() {
-  const [temperature, setTemperature] = useState<string>('');
-  const [elevation, setElevation] = useState<string>('');
+  const [city, setCity] = useState<City>();
 
-  const onSearch = (value: string) => {
-    console.log("Searching for:", value)
-    // const [lat, lng] = value.split(',').map(Number);
-    const [lat, lng] = value.split(',').map(str => {
-      const num = Number(str.trim());
-      if (isNaN(num) || !isFinite(num)) {
-        throw new Error(`Invalid number: ${str}`);
-      }
-      return num;
-    });
+  useEffect(() => {
+    const json = sessionStorage.getItem("city-session");
+    if (json) {
+      onSearch(JSON.parse(json))
+    }
+  }, []);
 
-    fetch(`/api/v1/temperature?latidude=${lat}&longtitude=${lng}`)
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        setTemperature(`${json.current.temperature_2m}°C`);
-        setElevation(`${json.elevation}m`);
-      })
+  const onSearch = (city: City) => {
+    if (city) {
+      // console.log("Meteo for city:", city);
+      sessionStorage.setItem("city-session", JSON.stringify(city));
+
+      fetch(`/api/v1/temperature?latidude=${city.coordinate.latitude}&longtitude=${city.coordinate.longtitude}`)
+        .then((response) => response.json())
+        .then((json) => {
+          // console.log(json);
+          city.current = json.current;
+          city.elevation = json.elevation;
+          setCity(city);
+        })
+    }
   }
 
   return (
@@ -33,18 +37,25 @@ export function App() {
         <div className="max-w-6xl w-full">
           <Header>
             <HeaderTitle>Weather Service</HeaderTitle>
-            <HeaderSearch onSearch={(value) => onSearch(value as string)} />
+            <HeaderSearch onSearch={(city) => onSearch(city as City)} />
+            <Button variant="default" disabled>Sign In</Button>
           </Header>
 
           <Content>
-            <Card className="w-full max-w-sm">
-              <CardContent className="grid p-2 md:grid-cols-2">
-                <div className="font-semibold">Temperature:</div>
-                <div>{temperature}</div>
-                <div className="font-semibold">Elevation:</div>
-                <div>{elevation}</div>
-              </CardContent>
-            </Card>
+            {city?.name ? (
+              <Card className="w-full">
+                <CardHeader className="flex items-center gap-2 space-y-0 border-b  sm:flex-row">
+                  <div className="grid flex-1 gap-1">
+                    <CardTitle className="text-xl">{city.name}</CardTitle>
+                    <CardDescription>{city.state ? `${city.state}, ${city.country}` : city.country}</CardDescription>
+                  </div>
+                  <div className="px-3">{new Date().toLocaleString('de')}</div>
+                </CardHeader>
+                <CardContent className="p-0 grid grid-cols-2 h-12 items-center">
+                  <div className="px-3 text-2xl">{city?.current.temperature_2m}°</div>
+                </CardContent>
+              </Card>
+            ) : null}
           </Content>
 
         </div>
