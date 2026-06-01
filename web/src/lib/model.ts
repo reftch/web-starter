@@ -1,13 +1,21 @@
 export type Coordinate = {
   latitude: number;
-  longtitude: number;
+  longitude: number;
 };
 
 export type City = {
   id: number
-  name: string
+  key?: string
+  type?: string
+  value?: string
+  postcode?: string
+  housenumber?: number
+  city: string
+  street?: string
+  district?: string
   state: string
   country: string
+  countrycode?: string
   coordinate: Coordinate
   current: {
     temperature_2m: number

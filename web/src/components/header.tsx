@@ -3,7 +3,8 @@ import { cn } from "../lib/utils";
 import { Field } from "./ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import type { City } from "../model";
+import type { City } from "../lib/model";
+import { CoordinateValidator } from "../lib/validator";
 
 function HeaderTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -36,10 +37,10 @@ function HeaderSearch({ className, onSearch, ...props }: HeaderSearchProps) {
       setIsSearchOpen(false);
     } else {
       const filtered = cities.filter(city =>
-        city.name.toLowerCase().includes(value.toLowerCase())
+        city.city.toLowerCase().includes(value.toLowerCase())
       );
       setFilteredCities(filtered);
-      if (filtered.length > 0 && filtered[0].name != value) {
+      if (filtered.length > 0 && filtered[0].city != value) {
         setIsSearchOpen(true);
       }
     }
@@ -54,42 +55,46 @@ function HeaderSearch({ className, onSearch, ...props }: HeaderSearchProps) {
     }
   }, [isSearchOpen]);
 
-  const containsNumbers = (str: string) => {
-    return /\d/.test(str); // Checks if string contains at least one digit
-  }
-
   const handleChange = (e: Event) => {
     const input = e.currentTarget as HTMLInputElement;
     const value = input.value;
     setValue(value)
-    // console.log(input.value)
-    if (containsNumbers(value)) {
-      const [lat, lng] = value.split(',').map(str => {
-        const num = Number(str.trim());
-        if (isNaN(num) || !isFinite(num)) {
-          throw new Error(`Invalid number: ${str}`);
-        }
-        return num;
-      });
 
-      const city: City = {
-        id: 1,
-        name: value,
-        state: '',
-        country: '',
-        elevation: 0,
-        coordinate: {
-          latitude: lat,
-          longtitude: lng,
-        },
-        current: {
-          temperature_2m: 0,
-          interval: 0,
-          time: '',
-        },
+    // check on physical coordinates
+    if (CoordinateValidator.validateStringCoordinates(value)) {
+      const parsedCoord = CoordinateValidator.parseStringToCoordinate(value);
+      if (parsedCoord) {
+        fetch(`/api/v1/reverse?lat=${parsedCoord.latitude}&lon=${parsedCoord.longitude}`)
+          .then((response) => response.json())
+          .then((json) => {
+            const c = json.features[0];
+            const city: City = {
+              id: c.properties.osm_id,
+              key: c.properties.osm_key,
+              value: c.properties.osm_value,
+              postcode: c.properties.postcode,
+              housenumber: c.properties.housenumber,
+              street: c.properties.street,
+              type: c.properties.type,
+              district: c.properties.district,
+              city: c.properties.city,
+              state: c.properties.state,
+              country: c.properties.country,
+              countrycode: c.properties.countrycode,
+              elevation: 0,
+              coordinate: parsedCoord,
+              current: {
+                temperature_2m: 0,
+                interval: 0,
+                time: '',
+              },
+            };
+
+            console.log(json.features[0])
+
+            onSearch(city);
+          })
       }
-      onSearch(city);
-
     } else if (value.length > 0) {
       fetch(`/api/v1/cities?keyword=${input.value}`)
         .then((response) => response.json())
@@ -98,13 +103,13 @@ function HeaderSearch({ className, onSearch, ...props }: HeaderSearchProps) {
           if (json.features.length > 0) {
             json.features.forEach((c: any) => array.push({
               id: c.properties.osm_id,
-              name: c.properties.name,
+              city: c.properties.name,
               state: c.properties.state,
               country: c.properties.country,
               elevation: 0,
               coordinate: {
                 latitude: c.geometry.coordinates[1],
-                longtitude: c.geometry.coordinates[0],
+                longitude: c.geometry.coordinates[0],
               },
               current: {
                 temperature_2m: 0,
@@ -121,8 +126,7 @@ function HeaderSearch({ className, onSearch, ...props }: HeaderSearchProps) {
 
   const handleCitySelect = (city: City) => {
     setIsSearchOpen(false);
-    setValue(city.name);
-    // onSearch(`${city.coordinate.latitude},${city.coordinate.longtitude}`);
+    setValue(city.city);
     onSearch(city);
   };
 
@@ -167,7 +171,7 @@ function HeaderSearch({ className, onSearch, ...props }: HeaderSearchProps) {
                         onClick={() => handleCitySelect(city)}
                       >
                         <div className="flex flex-col w-full">
-                          <div className="font-medium">{city.name}</div>
+                          <div className="font-medium">{city.city}</div>
                           <div className="text-sm text-muted-foreground">
                             {[city.state, city.country].filter(Boolean).join(', ')}
                           </div>
