@@ -4,7 +4,7 @@ import { Content } from "./components/content";
 import { Header, HeaderSearch, HeaderTitle } from "./components/header";
 import { Button } from "./components/ui/button";
 import type { City } from "./lib/model";
-import { getCity } from "./lib/api";
+import { getCity, getMeteo } from "./lib/api";
 
 export function App() {
   const [city, setCity] = useState<City>();
@@ -53,18 +53,12 @@ export function App() {
     }
   }, []);
 
-  const onSearch = (city: City) => {
+  const onSearch = async (city: City) => {
     if (city) {
       // console.log("Meteo for city:", city);
       sessionStorage.setItem("city-session", JSON.stringify(city));
-
-      fetch(`/api/v1/temperature?latidude=${city.coordinate.latitude}&longtitude=${city.coordinate.longitude}`)
-        .then((response) => response.json())
-        .then((json) => {
-          city.current = json.current;
-          city.elevation = json.elevation;
-          setCity(city);
-        })
+      city = await getMeteo(city);
+      setCity(city);
     }
   }
 

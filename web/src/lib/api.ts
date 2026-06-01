@@ -66,3 +66,15 @@ export const getCities = async (keyword: string): Promise<Array<City>> => {
 
   return array;
 }
+
+export const getMeteo = async (city: City): Promise<City> => {
+  const response = await fetch(`/api/v1/temperature?latidude=${city.coordinate.latitude}&longtitude=${city.coordinate.longitude}`);
+  if (!response.ok) {
+    return city;
+  }
+
+  const json = await response.json();
+  city.current = json.current;
+  city.elevation = json.elevation;
+  return city;
+}
